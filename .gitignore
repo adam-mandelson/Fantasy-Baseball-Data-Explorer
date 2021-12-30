@@ -1,0 +1,14 @@
+# Personal
+.env
+
+# Data files
+database.ini
+
+# Python files
+__pycache__
+
+# Config files
+config.py
+league_teams.json
+yahoo_ids.json
+yahoo_token.json

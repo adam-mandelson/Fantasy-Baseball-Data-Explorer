@@ -1,0 +1,7 @@
+pandas
+requests
+lxml
+requests_oauthlib
+psycopg2-binary
+pycodestyle
+sklearn
