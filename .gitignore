@@ -1,14 +1,15 @@
 # Personal
 .env
-
-# Data files
-database.ini
+*.txt
+*.code-workspace
 
 # Python files
 __pycache__
 
 # Config files
-config.py
-league_teams.json
-yahoo_ids.json
-yahoo_token.json
+config/
+
+# RStudio files
+.Rhistory
+.Rproj.user/
+*.Rproj
