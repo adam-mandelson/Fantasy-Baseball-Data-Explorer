@@ -16,7 +16,7 @@ library(ini)
 library(jsonlite)
 
 # Read .ini info
-read_ini <- read.ini('./config/config.ini')
+read_ini <- read.ini('../config/config.ini')
 
 con <- dbConnect(RPostgres::Postgres(),
                  dbname = read_ini$postgresql$database,
@@ -31,7 +31,7 @@ dbDisconnect(con)
 
 
 # Import full team names
-league_stats <- fromJSON('./config/league_stats.json', flatten=TRUE)
+league_stats <- fromJSON('../config/league_stats.json', flatten=TRUE)
 teams <- as.data.frame(league_stats['league_teams']) %>%
   mutate(id = as.integer(league_teams.id)) %>%
   rename(team_name = league_teams.team_name) %>%
@@ -39,15 +39,12 @@ teams <- as.data.frame(league_stats['league_teams']) %>%
 
 
 # Import league categories
-# categories <- data.frame("id" = categories$id, "categories" = categories$categories)
-categories <- unlist(league_stats$league_categories)
-categories <- data.frame('id' = names(categories), 'categories' = unlist(league_stats['league_categories'], use.names = FALSE))
-
+categories <- data.frame("id" = league_stats$renamed_categories$id, "categories" = league_stats$renamed_categories$categories)
 
 # Add team names to data file
 data <- data %>%
   left_join(teams, by = c("team_id" = "id")) %>%
-  # left_join(categories, by = c("category" = "id")) %>%
+  left_join(categories, by = c("category" = "id")) %>%
   mutate(season = as.integer(season),
          won_category = as.logical(as.integer(won_category)),
          won_week = as.logical(won_week))

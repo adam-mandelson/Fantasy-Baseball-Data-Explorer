@@ -1,18 +1,19 @@
 ###########################################################
 #
 # Script: global.R
-# Date: Thu Dec 30 2021
+# Wed Mar 09 14:31:50 2022
 #
 # Purpose:
-#  - load libraries
+#  - load packages
 #
 ###########################################################
 
-library(shiny)
+library(plyr)
 library(tidyverse)
+library(shiny)
+library(shinycssloaders)
 library(shinydashboard)
 library(shinyWidgets)
-library(shinycssloaders)
 
 source('static/r/data_import.R')
 source('static/r/utils.R')

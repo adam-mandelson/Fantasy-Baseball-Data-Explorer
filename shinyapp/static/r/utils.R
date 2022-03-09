@@ -34,7 +34,7 @@ fluid_design <- function(id, w, x, y, z) {
 
 # DATA HELPER FUNCTIONS ---------------------------------------------------------------
 # Plot data - filters by season and team name, returns full data frame
-df.full_plot <- function(figure_data, figure_category, figure_team_name = "All", figure_seasons) {
+df.full <- function(figure_data, figure_category=NULL, figure_team_name = "All", figure_seasons=NULL) {
   if (length(figure_seasons) > 1) {
     figure_seasons <- seq(figure_seasons[1], figure_seasons[2], 1)
   }
@@ -43,10 +43,19 @@ df.full_plot <- function(figure_data, figure_category, figure_team_name = "All",
   } else {
     teams_filter <- figure_team_name
   }
-  df <- figure_data %>%
-    filter(categories == figure_category,
-           season %in% figure_seasons,
-           team_name %in% teams_filter)
+  if (is.null(figure_seasons)) {
+    figure_seasons <- unique(figure_data$season)
+  }
+  if (is.null(figure_category)) {
+    df <- figure_data %>%
+      filter(season %in% figure_seasons,
+             team_name %in% teams_filter)
+  } else {
+    df <- figure_data %>%
+      filter(categories == figure_category,
+             season %in% figure_seasons,
+             team_name %in% teams_filter)
+  }
   return(df)
 }
 
@@ -89,11 +98,30 @@ df.strip_plot <- function(df) {
   return(df_strip_plot)
 }
 
-
+# VALUEBOX DATA ---------------------------------------------------------------
+df.value_box <- function(df) {
+  df_value_box <- df %>%
+    select(season, category, value) %>%
+    pivot_wider(names_from=category,
+                values_from=value,
+                values_fn={sum})
+}
 
 # FIGURE HELPER FUNCTIONS ---------------------------------------------------------------
-fig.density <- function(df) {
+fig.team_categories <- function(df, selected_category) {
+  selected_category <- categories[categories$categories==selected_category, 'id']
+  df <- df %>%
+    select(season, selected_category)
+  p <- ggplot(
+    df,
+    aes(x=season,
+        y=selected_category)) +
+    geom_bar(stat='identity')
+  return(p)
+}
 
+fig.density <- function(df) {
+  
   cdat <- ddply(df, "won_week", plyr::summarise, value.mean=round(mean(value), 3), value.median=round(median(value), 3))
 
   x_y <- density(df$value)
