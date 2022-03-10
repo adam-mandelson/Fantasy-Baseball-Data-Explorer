@@ -48,7 +48,7 @@ This is an example of how to list things you need to use the software and how to
 Add info about getting API refresh token.
 
 
-See the [open issues](https://github.com/adam-mandelson/eai-scheduling/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/adam-mandelson/Fantasy-Baseball-Data-Explorer/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
