@@ -25,24 +25,24 @@ con <- dbConnect(RPostgres::Postgres(),
                  password = read_ini$postgresql$password)
 
 res <- dbSendQuery(con, "SELECT * FROM yearly_stats")
-data <- dbFetch(res)
+league_data <- dbFetch(res)
 dbClearResult(res)
 dbDisconnect(con)
 
 
 # Import full team names
 league_stats <- fromJSON('../config/league_stats.json', flatten=TRUE)
-teams <- as.data.frame(league_stats['league_teams']) %>%
-  mutate(id = as.integer(league_teams.id)) %>%
-  rename(team_name = league_teams.team_name) %>%
-  select(-league_teams.id)
-
+teams <- data.frame(
+  'id' = as.integer(names(league_stats$league_teams)),
+  'team_name' = unlist(league_stats$league_teams, use.names=FALSE))
 
 # Import league categories
-categories <- data.frame("id" = league_stats$renamed_categories$id, "categories" = league_stats$renamed_categories$categories)
+categories <- data.frame(
+  'id' = names(league_stats$renamed_categories),
+  "categories" = unlist(league_stats$renamed_categories, use.names=FALSE))
 
 # Add team names to data file
-data <- data %>%
+league_data <- league_data %>%
   left_join(teams, by = c("team_id" = "id")) %>%
   left_join(categories, by = c("category" = "id")) %>%
   mutate(season = as.integer(season),

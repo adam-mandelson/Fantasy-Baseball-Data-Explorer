@@ -31,6 +31,46 @@ fluid_design <- function(id, w, x, y, z) {
   )
 }
 
+# VISUAL BOX FUNCTION ---------------------------------------------------------------
+categories_list <- list()
+for (category in categories$categories[-1]) {
+  categories_list <- append(categories_list, paste0(str_to_lower(str_replace_all(category, ' ', '_')), '_box'))
+}
+
+visual_box_design <- function(id,
+                              stat02, stat03, stat04, stat05,
+                              stat06, stat07, stat08, stat09,
+                              stat10, stat11, stat12, stat13,
+                              stat14, stat15, stat16, stat17,
+                              stat18, stat19) {
+  box_width <- 3
+  fluidRow(
+    div(
+      id=id,
+      valueBoxOutput(stat02, width=box_width),
+      valueBoxOutput(stat03, width=box_width),
+      valueBoxOutput(stat04, width=box_width),
+      valueBoxOutput(stat05, width=box_width),
+      valueBoxOutput(stat06, width=box_width),
+      valueBoxOutput(stat07, width=box_width),
+      valueBoxOutput(stat08, width=box_width),
+      valueBoxOutput(stat09, width=box_width),
+      valueBoxOutput(stat10, width=box_width),
+      valueBoxOutput(stat11, width=box_width),
+      valueBoxOutput(stat12, width=box_width),
+      valueBoxOutput(stat13, width=box_width),
+      valueBoxOutput(stat14, width=box_width),
+      valueBoxOutput(stat15, width=box_width),
+      valueBoxOutput(stat16, width=box_width),
+      valueBoxOutput(stat17, width=box_width),
+      column(
+        width=box_width
+      ),
+      valueBoxOutput(stat18, width=box_width),
+      valueBoxOutput(stat19, width=box_width)
+    )
+  )
+}
 
 # DATA HELPER FUNCTIONS ---------------------------------------------------------------
 # Plot data - filters by season and team name, returns full data frame
@@ -101,23 +141,40 @@ df.strip_plot <- function(df) {
 # VALUEBOX DATA ---------------------------------------------------------------
 df.value_box <- function(df) {
   df_value_box <- df %>%
-    select(season, category, value) %>%
+    select(season, category, value)
+  df_counts <- df_value_box %>%
     pivot_wider(names_from=category,
                 values_from=value,
-                values_fn={sum})
+                values_fn={sum}) %>%
+    select(!ends_with('r', ignore.case = FALSE))
+  df_rates <- df_value_box %>%
+    pivot_wider(names_from=category,
+                values_from=value,
+                values_fn={mean}) %>%
+    select(ends_with('r', ignore.case = FALSE))
+  
+  return(cbind(df_counts, df_rates))
+}
+
+vbox_helper <- function(category, data) {
+  valueBox(
+    value=round(data[[category]], 3),
+    subtitle = categories[categories$id==category, 'categories']
+    # icon='',
+    # color='' # TODO: color dependent on ranking
+    # TODO: add league avg
+    # TODO: add avg to win
+  )
 }
 
 # FIGURE HELPER FUNCTIONS ---------------------------------------------------------------
 fig.team_categories <- function(df, selected_category) {
-  selected_category <- categories[categories$categories==selected_category, 'id']
-  df <- df %>%
-    select(season, selected_category)
-  p <- ggplot(
-    df,
-    aes(x=season,
-        y=selected_category)) +
+  category <- categories[categories$categories==selected_category, 'id']
+  ggplot(
+    data=df,
+    aes(x=`season`,
+        y=.data[[category]])) +
     geom_bar(stat='identity')
-  return(p)
 }
 
 fig.density <- function(df) {

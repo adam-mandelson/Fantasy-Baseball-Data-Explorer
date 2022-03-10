@@ -57,6 +57,11 @@ shinyUI(fluidPage(
           )
         ),
         menuItem(
+          text='Offline Data Exploration',
+          tabName='data_reports',
+          icon=icon('file-code')
+        ),
+        menuItem(
           text = "Releases",
           tabName = "releases",
           icon = icon("tasks")
@@ -95,8 +100,7 @@ shinyUI(fluidPage(
               selectizeInput(
                 inputId='team_stats.team',
                 label=NULL,
-                choices=c(Choose=NULL,
-                          sort(teams$team_name)),
+                choices=c(sort(teams$team_name)),
                 selected='Bellhorn',
                 multiple=FALSE,
               )
@@ -110,13 +114,9 @@ shinyUI(fluidPage(
               selectizeInput(
                 inputId='team_stats.season',
                 label=NULL,
-                choices=c(Choose=NULL,
-                          unique(data$season)),
-                multiple=TRUE,
-                options=list(
-                  placeholder='Select a season',
-                  onInitialize=I('function() { this.setValue(""); }')
-                )
+                choices=c(unique(league_data$season)),
+                selected=2021,
+                multiple=FALSE
               )
             )
           ),
@@ -124,7 +124,19 @@ shinyUI(fluidPage(
             id='team_stats_year_data',
             # conditionalPanel(
               # condition='output.team_stats_category==""',
-            fluid_design('team_stats_panel', 'box05', 'box06', 'box07', 'box08')
+            # fluid_design('team_stats_panel', 'box05', 'box06', 'box07', 'box08')
+            renderPrint({
+              output$team_stats_season_marker
+            }),
+            conditionalPanel(
+              condition='output.team_stats_season_marker!=NULL',
+              visual_box_design('team_boxes',
+                                'r_box', 'hr_box', 'rbi_box', 'bbb_box',
+                                'kb_box', 'avg_box', 'obp_box', 'slg_box',
+                                'nsb_box', 'ip_box', 'w_box', 'l_box',
+                                'bbp_box', 'kp_box', 'era_box', 'whip_box',
+                                'qs_box', 'nsvh_box')
+            )
           ),
             # TODO: ONE CHART ON CLICK
             # conditionalPanel(
@@ -172,15 +184,15 @@ shinyUI(fluidPage(
                   inputId = "head_to_head.team_name",
                   label = "Select Team Name(s)",
                   choices = c("All",
-                              sort(unique(data$team_name))),
+                              sort(unique(league_data$team_name))),
                   selected = "All",
                   multiple = TRUE,
                 ),
                 sliderInput(
                   inputId = "head_to_head.seasons",
                   label = "Select season(s)",
-                  min = min(data$season),
-                  max = max(data$season),
+                  min = min(league_data$season),
+                  max = max(league_data$season),
                   value = c(2014, 2021),
                   step = 1,
                   sep = ""

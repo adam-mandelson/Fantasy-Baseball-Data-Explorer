@@ -51,8 +51,7 @@ def connect():
         with conn:
             print('PostgreSQL database:')
             cur.execute('SELECT version()')
-            db_version = cur.fetchone()
-            print(db_version)
+            # print(db_version)
 
         with conn:
             buffer = StringIO()
