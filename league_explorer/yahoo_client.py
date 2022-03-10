@@ -31,13 +31,13 @@ class YahooClient(object):
             token=self.token,
             redirect_uri='oob',
         )
-        
+
         self.refresh_token()
-    
+
     def load_token(self):
         with open(self.token_location, 'r') as f:
             self.token = json.load(f)
-    
+
     def refresh_token(self):
         self.token = self.session.refresh_token(
             self.token_url,

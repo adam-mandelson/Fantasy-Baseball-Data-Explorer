@@ -33,14 +33,6 @@ with open(os.path.join(config_dir, "league_stats.json"), "r") as f:
 client_id = config['client_id']
 client_secret = config['client_secret']
 
-# TODO: Update to database
-season = "2021"
-week = "2"
-sport_id = config['sport_id'][season]
-league_id = config["league_id"][season]
-league_client = YahooClient(client_id, client_secret, config_dir)
-ns = {'f': 'http://fantasysports.yahooapis.com/fantasy/v2/base.rng'}
-
 
 # Get weekly scoreboard
 def get_scores(week):
@@ -166,7 +158,7 @@ def get_stats(response):
     # there are ties, so we want a int column that contains nulls
     if matchups.size != 0:
         matchups['won_category'] = (matchups[
-            'won_category'] * 1).astype('Int64')
+            'won_category'] * 1).astype('Int64').fillna(0)
         return matchups
 
 
@@ -174,18 +166,26 @@ def get_stats(response):
 yearly_stats = pd.DataFrame()
 
 # Get the start and end weeks
-response = get_scores(week)
-start_week = response.xpath("//f:league",
-                            namespaces=ns)[0].findtext(
-                            "f:start_week", namespaces=ns)
-end_week = response.xpath("//f:league",
-                          namespaces=ns)[0].findtext(
-                              "f:end_week", namespaces=ns)
-current_week = response.xpath("//f:league",
+league_client = YahooClient(client_id, client_secret, config_dir)
+ns = {'f': 'http://fantasysports.yahooapis.com/fantasy/v2/base.rng'}
+seasons = ["2014", "2015", "2016", "2017", "2018", "2019", "2021"]
+week = "2"
+for season in seasons:
+    sport_id = config['sport_id'][season]
+    league_id = config["league_id"][season]
+
+    response = get_scores(week)
+    start_week = response.xpath("//f:league",
+                                namespaces=ns)[0].findtext(
+                                "f:start_week", namespaces=ns)
+    end_week = response.xpath("//f:league",
                               namespaces=ns)[0].findtext(
-                                  "f:current_week", namespaces=ns)
-# Update the yearly stats DataFrame with stats from each week
-for week_num in range(int(start_week), int(end_week)+1):
-    response = get_scores(week_num)
-    weekly_stats = get_stats(response)
-    yearly_stats = pd.concat([yearly_stats, weekly_stats])
+                                "f:end_week", namespaces=ns)
+    current_week = response.xpath("//f:league",
+                                  namespaces=ns)[0].findtext(
+                                    "f:current_week", namespaces=ns)
+    # Update the yearly stats DataFrame with stats from each week
+    for week_num in range(int(start_week), int(end_week)+1):
+        response = get_scores(week_num)
+        weekly_stats = get_stats(response)
+        yearly_stats = pd.concat([yearly_stats, weekly_stats])
