@@ -44,7 +44,6 @@ Info here will show how to get this running locally if necessary.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
 Add info about getting API refresh token.
 
 
