@@ -13,11 +13,6 @@
 # SOURCE LIBARIES, FUNCTIONS ---------------------------------------------------------------
 source('global.R')
 
-
-# SHINY OPTIONS ---------------------------------------------------------------
-options(shiny.autoreload = TRUE)
-
-
 # SHINY UI ---------------------------------------------------------------
 shinyUI(fluidPage(
   
