@@ -59,7 +59,20 @@ shinyUI(fluidPage(
         menuItem(
           text='Offline Data Exploration',
           tabName='data_reports',
-          icon=icon('file-code')
+          icon=icon('python'),
+          
+          menuItem(
+            text='Bayesian modeling',
+            tabName='bayes_modeling',
+            icon=icon('file-code')
+          ),
+          
+          menuItem(
+            text='SVM modeling',
+            tabName='svm_modeling',
+            icon=icon('file-code')
+          )
+          
         ),
         menuItem(
           text = "Releases",
@@ -219,6 +232,20 @@ shinyUI(fluidPage(
               )
             )
           )
+        ),
+        
+        # OFFLINE_DATA PAGE ---------------------------------------------------------------
+        tabItem(
+          tabName='bayes_modeling',
+          tags$p(
+            'More data available in ./shinyapps/static/www/bayes_pdf_report.pdf'
+          ),
+          includeHTML('static/www/bayes_exploration_2.html')
+        ),
+        
+        tabItem(
+          tabName='svm_modeling',
+          includeHTML('static/www/svm_exploration.html')
         ),
         
         # RELEASES PAGE ---------------------------------------------------------------

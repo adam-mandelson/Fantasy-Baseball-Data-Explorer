@@ -278,5 +278,5 @@ function(input, output, session) {
   })
   
   output$head_to_head.fig <- renderUI(plotOutput("head_to_head.plot", width = "100%"))
-  
+
 }
