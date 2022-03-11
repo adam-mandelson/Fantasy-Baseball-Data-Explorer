@@ -17,7 +17,10 @@
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#about">About</a>
+      <a href="#about-the-project">About the Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
@@ -34,6 +37,16 @@
 A simple app to look at fantasy baseball data, with an aim to develop some predictive tools going forward.
 Several offline reports are available in the Offline Data tab.
 The site will be available online shortly pending a rework of the database scripts.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+<!-- BUILT WITH -->
+
+## Built With
+
+* [Python](https://www.python.org/)
+* [Shiny](https://shiny.rstudio.com/)
+* [PostgreSQL](https://www.postgresql.org/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
