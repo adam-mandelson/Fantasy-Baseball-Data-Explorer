@@ -47,7 +47,6 @@ def connect():
         with conn:
             print('PostgreSQL database:')
             cur.execute('SELECT version()')
-            # print(db_version)
 
         with conn:
             buffer = StringIO()
@@ -59,7 +58,6 @@ def connect():
                 rows = cur.fetchone()
                 print("Data inserted into yearly_stats successfully")
                 print(f"Inserted {rows} rows")
-            # conn.commit()
             except (Exception, psycopg2.DatabaseError) as err:
                 psycopg2_exception(err)
 

@@ -10,7 +10,7 @@
 ###########################################################
 
 
-# Connect to Postgres database
+# Connect to PostgreSQL database
 library(DBI)
 library(ini)
 library(jsonlite)
@@ -18,9 +18,11 @@ library(jsonlite)
 # Read .ini info
 read_ini <- read.ini('../config/config.ini')
 
+# TODO: Change to baseball_user
 con <- dbConnect(RPostgres::Postgres(),
-                 dbname = read_ini$postgresql$database,
                  host = read_ini$postgresql$host,
+                 port = read_ini$postgresql$port,
+                 dbname = read_ini$postgresql$database,
                  user = read_ini$postgresql$user,
                  password = read_ini$postgresql$password)
 
