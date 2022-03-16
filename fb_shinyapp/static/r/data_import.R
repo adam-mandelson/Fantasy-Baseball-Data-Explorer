@@ -16,15 +16,16 @@ library(ini)
 library(jsonlite)
 
 # Read .ini info
-read_ini <- read.ini('../config/config.ini')
-
-# TODO: Change to baseball_user
-con <- dbConnect(RPostgres::Postgres(),
-                 host = read_ini$postgresql$host,
-                 port = read_ini$postgresql$port,
-                 dbname = read_ini$postgresql$database,
-                 user = read_ini$postgresql$user,
-                 password = read_ini$postgresql$password)
+read_ini <- read.ini('./config/config.ini')
+  
+con <- dbConnect(
+  RPostgres::Postgres(),
+  host = read_ini$postgresql$host,
+  port = read_ini$postgresql$port,
+  dbname = read_ini$postgresql$database,
+  user = read_ini$postgresql$user,
+  password = read_ini$postgresql$password
+)
 
 res <- dbSendQuery(con, "SELECT * FROM yearly_stats")
 league_data <- dbFetch(res)
@@ -33,7 +34,7 @@ dbDisconnect(con)
 
 
 # Import full team names
-league_stats <- fromJSON('../config/league_stats.json', flatten=TRUE)
+league_stats <- fromJSON('./config/league_stats.json', flatten=TRUE)
 teams <- data.frame(
   'id' = as.integer(names(league_stats$league_teams)),
   'team_name' = unlist(league_stats$league_teams, use.names=FALSE))
