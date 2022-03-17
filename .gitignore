@@ -13,3 +13,4 @@ config/
 .Rhistory
 .Rproj.user/
 *.Rproj
+rsconnect/

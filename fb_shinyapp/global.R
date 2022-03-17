@@ -9,6 +9,7 @@
 ###########################################################
 
 library(plyr)
+library(markdown)
 library(tidyverse)
 library(shiny)
 library(shinycssloaders)

@@ -7,10 +7,6 @@ More info on the yahoo fantasy sports api is available at
     https://developer.yahoo.com/fantasysports/guide/.
 This is a helpful app for figuring out what to query:
     https://yahoo-fantasy-node-docs.vercel.app/.
-This script prompts for
-    - Updating existing data.
-    - Getting new data.
-    - Adding data to the full data csv.
 '''
 
 from io import StringIO
@@ -51,7 +47,6 @@ def connect():
         with conn:
             print('PostgreSQL database:')
             cur.execute('SELECT version()')
-            # print(db_version)
 
         with conn:
             buffer = StringIO()
@@ -63,7 +58,6 @@ def connect():
                 rows = cur.fetchone()
                 print("Data inserted into yearly_stats successfully")
                 print(f"Inserted {rows} rows")
-            # conn.commit()
             except (Exception, psycopg2.DatabaseError) as err:
                 psycopg2_exception(err)
 

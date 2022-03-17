@@ -2,11 +2,12 @@ from configparser import ConfigParser
 import sys
 
 
-def config(filename='./config/database.ini', section='postgresql'):
+def config(filename='./config/config.ini', section='postgresql'):
     """
     Parse a config file.
 
-    :param filename: 
+    :param filename: The config.ini file location.
+    :param section: The database section of the config.ini file.
     """
     parser = ConfigParser()
     parser.read(filename)
