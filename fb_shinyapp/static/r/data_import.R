@@ -16,7 +16,7 @@ library(ini)
 library(jsonlite)
 
 # Read .ini info
-read_ini <- read.ini('./config/config.ini')
+read_ini <- read.ini('config/config.ini')
   
 con <- dbConnect(
   RPostgres::Postgres(),
@@ -34,7 +34,7 @@ dbDisconnect(con)
 
 
 # Import full team names
-league_stats <- fromJSON('./config/league_stats.json', flatten=TRUE)
+league_stats <- fromJSON('config/league_stats.json', flatten=TRUE)
 teams <- data.frame(
   'id' = as.integer(names(league_stats$league_teams)),
   'team_name' = unlist(league_stats$league_teams, use.names=FALSE))
