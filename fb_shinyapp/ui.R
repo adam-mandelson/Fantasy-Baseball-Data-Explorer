@@ -137,7 +137,7 @@ shinyUI(fluidPage(
               output$team_stats_season_marker
             }),
             conditionalPanel(
-              condition='output.team_stats_season_marker!=NULL',
+              condition='output.team_stats_season_marker!=null',
               visual_box_design('team_boxes',
                                 'r_box', 'hr_box', 'rbi_box', 'bbb_box',
                                 'kb_box', 'avg_box', 'obp_box', 'slg_box',
