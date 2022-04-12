@@ -46,27 +46,75 @@ visual_box_design <- function(id,
   box_width <- 3
   fluidRow(
     div(
-      id=id,
-      valueBoxOutput(stat02, width=box_width),
-      valueBoxOutput(stat03, width=box_width),
-      valueBoxOutput(stat04, width=box_width),
-      valueBoxOutput(stat05, width=box_width),
-      valueBoxOutput(stat06, width=box_width),
-      valueBoxOutput(stat07, width=box_width),
-      valueBoxOutput(stat08, width=box_width),
-      valueBoxOutput(stat09, width=box_width),
-      valueBoxOutput(stat10, width=box_width),
-      valueBoxOutput(stat11, width=box_width),
-      valueBoxOutput(stat12, width=box_width),
-      valueBoxOutput(stat13, width=box_width),
-      valueBoxOutput(stat14, width=box_width),
-      valueBoxOutput(stat15, width=box_width),
-      valueBoxOutput(stat16, width=box_width),
-      valueBoxOutput(stat17, width=box_width),
-      column(
-        width=box_width
-      ),
-      valueBoxOutput(stat18, width=box_width),
+      id=stat02,
+      valueBoxOutput(stat02, width=box_width)
+    ),
+    div(
+      id=stat03,
+      valueBoxOutput(stat03, width=box_width)
+    ),
+    div(
+      id=stat04,
+      valueBoxOutput(stat04, width=box_width)
+    ),
+    div(
+      id=stat05,
+      valueBoxOutput(stat05, width=box_width)
+    ),
+    div(
+      id=stat06,
+      valueBoxOutput(stat06, width=box_width)
+    ),
+    div(
+      id=stat07,
+      valueBoxOutput(stat07, width=box_width)
+    ),
+    div(
+      id=stat08,
+      valueBoxOutput(stat08, width=box_width)
+    ),
+    div(
+      id=stat09,
+      valueBoxOutput(stat09, width=box_width)
+    ),
+    div(
+      id=stat10,
+      valueBoxOutput(stat10, width=box_width)
+    ),
+    div(
+      id=stat11,
+      valueBoxOutput(stat11, width=box_width)
+    ),
+    div(
+      id=stat12,
+      valueBoxOutput(stat12, width=box_width)
+    ),
+    div(
+      id=stat13,
+      valueBoxOutput(stat13, width=box_width)
+    ),
+    div(
+      id=stat14,
+      valueBoxOutput(stat14, width=box_width)
+    ),
+    div(
+      id=stat15,
+      valueBoxOutput(stat15, width=box_width)
+    ),
+    div(
+      id=stat16,
+      valueBoxOutput(stat16, width=box_width)
+    ),
+    div(
+      id=stat17,
+      valueBoxOutput(stat17, width=box_width)
+    ),
+    div(
+      id=stat18,
+      valueBoxOutput(stat18, width=box_width)
+    ),
+    div(
+      id=stat19,
       valueBoxOutput(stat19, width=box_width)
     )
   )
@@ -156,10 +204,20 @@ df.value_box <- function(df) {
   return(cbind(df_counts, df_rates))
 }
 
+df.value_box_league <- function(df) {
+  df_value_box <- df %>%
+    select(season, category, value, team_name)
+  df_counts <- df_value_box %>%
+    pivot_wider(names_from=category,
+                values_from=value,
+                values_fn={sum})
+}
+
 vbox_helper <- function(category, data) {
   valueBox(
     value=round(data[[category]], 3),
-    subtitle = categories[categories$id==category, 'categories']
+    subtitle = categories[categories$id==category, 'categories'],
+    href=NULL
     # icon='',
     # color='' # TODO: color dependent on ranking
     # TODO: add league avg
@@ -168,13 +226,21 @@ vbox_helper <- function(category, data) {
 }
 
 # FIGURE HELPER FUNCTIONS ---------------------------------------------------------------
-fig.team_categories <- function(df, selected_category) {
-  category <- categories[categories$categories==selected_category, 'id']
+fig.team_categories <- function(df, selected_category, highlighted_team) {
+  category <- categories[categories$id==selected_category, 'id']
+  df <- df %>%
+    mutate(to_highlight = if_else(team_name==highlighted_team, "yes", "no"))
   ggplot(
     data=df,
-    aes(x=`season`,
-        y=.data[[category]])) +
-    geom_bar(stat='identity')
+    aes(x=reorder(team_name,-.data[[category]]),
+        y=.data[[category]],
+        fill=to_highlight)) +
+    geom_bar(stat='identity') +
+    scale_fill_manual(values=c("yes" = "tomato", "no" = "gray"), guide="none") +
+    labs(x = "Team Name",
+         y=categories[categories$id==selected_category, 'categories'],
+         subtitle=df$season[1]) +
+    theme(axis.text.x = element_text(angle=45, hjust=1))
 }
 
 fig.density <- function(df) {

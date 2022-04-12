@@ -32,11 +32,43 @@ function(input, output, session) {
   
   outputOptions(output, 'team_stats_season_marker', suspendWhenHidden=FALSE)
   
+  output$r_box.plot <- renderPlot({
+    fig.team_categories(
+      df=league_stats.data(),
+      selected_category='b_R',
+      highlighted_team=input$team_stats.team
+    )
+  })
+  
+  onclick('r_box', showModal(modalDialog(
+    title='Yearly category values',
+    plotOutput('r_box.plot'),
+    footer=modalButton("Dismiss"),
+    size="l"
+  )))
+  
   output$r_box <- renderValueBox({
     box_category <- 'b_R'
     vbox_helper(category=box_category,
                 data=team_stats.data())
   })
+  
+  ####
+  
+  output$hr_box.plot <- renderPlot({
+    fig.team_categories(
+      df=league_stats.data(),
+      selected_category='b_HR',
+      highlighted_team=input$team_stats.team
+    )
+  })
+  
+  onclick('hr_box', showModal(modalDialog(
+    title='Yearly category values',
+    plotOutput('hr_box.plot'),
+    footer=modalButton("Dismiss"),
+    size="l"
+  )))
   
   output$hr_box <- renderValueBox({
     box_category <- 'b_HR'
@@ -44,11 +76,46 @@ function(input, output, session) {
                 data=team_stats.data())
   })
   
+  ####
+  
+  output$rbi_box.plot <- renderPlot({
+    fig.team_categories(
+      df=league_stats.data(),
+      selected_category='b_RBI',
+      highlighted_team=input$team_stats.team
+    )
+  })
+  
+  onclick('rbi_box', showModal(modalDialog(
+    title='Yearly category values',
+    plotOutput('rbi_box.plot'),
+    footer=modalButton("Dismiss"),
+    size="l"
+  )))
+  
   output$rbi_box <- renderValueBox({
     box_category <- 'b_RBI'
     vbox_helper(category=box_category,
                 data=team_stats.data())
   })
+  
+  ####
+  
+  output$bbb_box.plot <- renderPlot({
+    fig.team_categories(
+      df=league_stats.data(),
+      selected_category='b_BB',
+      highlighted_team=input$team_stats.team
+    )
+  })
+  
+  onclick('bbb_box', showModal(modalDialog(
+    title='Yearly category values',
+    plotOutput('bbb_box.plot'),
+    footer=modalButton("Dismiss"),
+    size="l"
+  )))
+  
   
   output$bbb_box <- renderValueBox({
     box_category <- 'b_BB'
@@ -56,11 +123,45 @@ function(input, output, session) {
                 data=team_stats.data())
   })
   
+  ####
+  
+  output$kb_box.plot <- renderPlot({
+    fig.team_categories(
+      df=league_stats.data(),
+      selected_category='b_K',
+      highlighted_team=input$team_stats.team
+    )
+  })
+  
+  onclick('kb_box', showModal(modalDialog(
+    title='Yearly category values',
+    plotOutput('kb_box.plot'),
+    footer=modalButton("Dismiss"),
+    size="l"
+  )))
+
   output$kb_box <- renderValueBox({
     box_category <- 'b_K'
     vbox_helper(category=box_category,
                 data=team_stats.data())
   })
+  
+  ####
+  
+  output$avg_box.plot <- renderPlot({
+    fig.team_categories(
+      df=league_stats.data(),
+      selected_category='b_AVGr',
+      highlighted_team=input$team_stats.team
+    )
+  })
+  
+  onclick('avg_box', showModal(modalDialog(
+    title='Yearly category values',
+    plotOutput('avg_box.plot'),
+    footer=modalButton("Dismiss"),
+    size="l"
+  )))
   
   output$avg_box <- renderValueBox({
     box_category <- 'b_AVGr'
@@ -68,11 +169,45 @@ function(input, output, session) {
                 data=team_stats.data())
   })
   
+  ####
+  
+  output$obp_box.plot <- renderPlot({
+    fig.team_categories(
+      df=league_stats.data(),
+      selected_category='b_OBPr',
+      highlighted_team=input$team_stats.team
+    )
+  })
+  
+  onclick('obp_box', showModal(modalDialog(
+    title='Yearly category values',
+    plotOutput('obp_box.plot'),
+    footer=modalButton("Dismiss"),
+    size="l"
+  )))
+  
   output$obp_box <- renderValueBox({
     box_category <- 'b_OBPr'
     vbox_helper(category=box_category,
                 data=team_stats.data())
   })
+  
+  ####
+  
+  output$slg_box.plot <- renderPlot({
+    fig.team_categories(
+      df=league_stats.data(),
+      selected_category='b_SLGr',
+      highlighted_team=input$team_stats.team
+    )
+  })
+  
+  onclick('slg_box', showModal(modalDialog(
+    title='Yearly category values',
+    plotOutput('slg_box.plot'),
+    footer=modalButton("Dismiss"),
+    size="l"
+  )))
   
   output$slg_box <- renderValueBox({
     box_category <- 'b_SLGr'
@@ -80,11 +215,45 @@ function(input, output, session) {
                 data=team_stats.data())
   })
   
+  ####
+  
+  output$nsb_box.plot <- renderPlot({
+    fig.team_categories(
+      df=league_stats.data(),
+      selected_category='b_NSB',
+      highlighted_team=input$team_stats.team
+    )
+  })
+  
+  onclick('nsb_box', showModal(modalDialog(
+    title='Yearly category values',
+    plotOutput('nsb_box.plot'),
+    footer=modalButton("Dismiss"),
+    size="l"
+  )))
+  
   output$nsb_box <- renderValueBox({
     box_category <- 'b_NSB'
     vbox_helper(category=box_category,
                 data=team_stats.data())
   })
+  
+  ####
+  
+  output$ip_box.plot <- renderPlot({
+    fig.team_categories(
+      df=league_stats.data(),
+      selected_category='p_IP',
+      highlighted_team=input$team_stats.team
+    )
+  })
+  
+  onclick('ip_box', showModal(modalDialog(
+    title='Yearly category values',
+    plotOutput('ip_box.plot'),
+    footer=modalButton("Dismiss"),
+    size="l"
+  )))
   
   output$ip_box <- renderValueBox({
     box_category <- 'p_IP'
@@ -92,11 +261,45 @@ function(input, output, session) {
                 data=team_stats.data())
   })
   
+  ####
+  
+  output$w_box.plot <- renderPlot({
+    fig.team_categories(
+      df=league_stats.data(),
+      selected_category='p_W',
+      highlighted_team=input$team_stats.team
+    )
+  })
+  
+  onclick('w_box', showModal(modalDialog(
+    title='Yearly category values',
+    plotOutput('w_box.plot'),
+    footer=modalButton("Dismiss"),
+    size="l"
+  )))
+  
   output$w_box <- renderValueBox({
     box_category <- 'p_W'
     vbox_helper(category=box_category,
                 data=team_stats.data())
   })
+  
+  ####
+  
+  output$l_box.plot <- renderPlot({
+    fig.team_categories(
+      df=league_stats.data(),
+      selected_category='p_L',
+      highlighted_team=input$team_stats.team
+    )
+  })
+  
+  onclick('l_box', showModal(modalDialog(
+    title='Yearly category values',
+    plotOutput('l_box.plot'),
+    footer=modalButton("Dismiss"),
+    size="l"
+  )))
   
   output$l_box <- renderValueBox({
     box_category <- 'p_L'
@@ -104,11 +307,45 @@ function(input, output, session) {
                 data=team_stats.data())
   })
   
+  ####
+  
+  output$bbp_box.plot <- renderPlot({
+    fig.team_categories(
+      df=league_stats.data(),
+      selected_category='p_BB',
+      highlighted_team=input$team_stats.team
+    )
+  })
+  
+  onclick('bbp_box', showModal(modalDialog(
+    title='Yearly category values',
+    plotOutput('bbp_box.plot'),
+    footer=modalButton("Dismiss"),
+    size="l"
+  )))
+  
   output$bbp_box <- renderValueBox({
     box_category <- 'p_BB'
     vbox_helper(category=box_category,
                 data=team_stats.data())
   })
+  
+  ####
+  
+  output$kp_box.plot <- renderPlot({
+    fig.team_categories(
+      df=league_stats.data(),
+      selected_category='p_K',
+      highlighted_team=input$team_stats.team
+    )
+  })
+  
+  onclick('kp_box', showModal(modalDialog(
+    title='Yearly category values',
+    plotOutput('kp_box.plot'),
+    footer=modalButton("Dismiss"),
+    size="l"
+  )))
   
   output$kp_box <- renderValueBox({
     box_category <- 'p_K'
@@ -116,11 +353,45 @@ function(input, output, session) {
                 data=team_stats.data())
   })
   
+  ####
+  
+  output$era_box.plot <- renderPlot({
+    fig.team_categories(
+      df=league_stats.data(),
+      selected_category='p_ERAr',
+      highlighted_team=input$team_stats.team
+    )
+  })
+  
+  onclick('era_box', showModal(modalDialog(
+    title='Yearly category values',
+    plotOutput('era_box.plot'),
+    footer=modalButton("Dismiss"),
+    size="l"
+  )))
+  
   output$era_box <- renderValueBox({
     box_category <- 'p_ERAr'
     vbox_helper(category=box_category,
                 data=team_stats.data())
   })
+  
+  ####
+  
+  output$whip_box.plot <- renderPlot({
+    fig.team_categories(
+      df=league_stats.data(),
+      selected_category='p_WHIPr',
+      highlighted_team=input$team_stats.team
+    )
+  })
+  
+  onclick('whip_box', showModal(modalDialog(
+    title='Yearly category values',
+    plotOutput('whip_box.plot'),
+    footer=modalButton("Dismiss"),
+    size="l"
+  )))
   
   output$whip_box <- renderValueBox({
     box_category <- 'p_WHIPr'
@@ -128,121 +399,48 @@ function(input, output, session) {
                 data=team_stats.data())
   })
   
+  ####
+  
+  output$qs_box.plot <- renderPlot({
+    fig.team_categories(
+      df=league_stats.data(),
+      selected_category='p_QS',
+      highlighted_team=input$team_stats.team
+    )
+  })
+  
+  onclick('qs_box', showModal(modalDialog(
+    title='Yearly category values',
+    plotOutput('qs_box.plot'),
+    footer=modalButton("Dismiss"),
+    size="l"
+  )))
+  
   output$qs_box <- renderValueBox({
     box_category <- 'p_QS'
     vbox_helper(category=box_category,
                 data=team_stats.data())
   })
   
+  output$nsvh_box.plot <- renderPlot({
+    fig.team_categories(
+      df=league_stats.data(),
+      selected_category='p_NSVH',
+      highlighted_team=input$team_stats.team
+    )
+  })
+  
+  onclick('nsvh_box', showModal(modalDialog(
+    title='Yearly category values',
+    plotOutput('nsvh_box.plot'),
+    footer=modalButton("Dismiss"),
+    size="l"
+  )))
+  
   output$nsvh_box <- renderValueBox({
     box_category <- 'p_NSVH'
     vbox_helper(category=box_category,
                 data=team_stats.data())
-  })
-  
-  
-  output$box05.plot <- renderPlot({
-    fig.team_categories(
-      df=team_stats.data(),
-      selected_category=input$box05.input
-    )
-  })
-  
-  output$box05 <- renderUI({
-    div(
-      style="position: relative",
-      box(
-        id='box05',
-        width=NULL,
-        height='400px',
-        selectizeInput(
-          inputId='box05.input',
-          label=NULL,
-          choices=c(categories$categories),
-          selected='Runs',
-          multiple=FALSE
-        ),
-        plotOutput('box05.plot', height='330px')
-      )
-    )
-  })
-  
-  output$box06.plot <- renderPlot({
-    fig.team_categories(
-      df=team_stats.data(),
-      selected_category=input$box06.input
-    )
-  })
-  
-  output$box06 <- renderUI({
-    div(
-      style="position: relative",
-      box(
-        id='box06',
-        width=NULL,
-        height='400px',
-        selectizeInput(
-          inputId='box06.input',
-          label=NULL,
-          choices=c(categories$categories),
-          selected='On Base Percentage',
-          multiple=FALSE
-        ),
-        plotOutput('box06.plot', height='330px')
-      )
-    )
-  })
-  
-  output$box07.plot <- renderPlot({
-    fig.team_categories(
-      df=team_stats.data(),
-      selected_category=input$box07.input
-    )
-  })
-  
-  output$box07 <- renderUI({
-    div(
-      style="position: relative",
-      box(
-        id='box07',
-        width=NULL,
-        height='400px',
-        selectizeInput(
-          inputId='box07.input',
-          label=NULL,
-          choices=c(categories$categories),
-          selected='Walks Hits Per Innings Pitched',
-          multiple=FALSE
-        ),
-        plotOutput('box07.plot', height='330px')
-      )
-    )
-  })
-  
-  output$box08.plot <- renderPlot({
-    fig.team_categories(
-      df=team_stats.data(),
-      selected_category=input$box08.input
-    )
-  })
-  
-  output$box08 <- renderUI({
-    div(
-      style="position: relative",
-      box(
-        id='box08',
-        width=NULL,
-        height='400px',
-        selectizeInput(
-          inputId='box08.input',
-          label=NULL,
-          choices=c(categories$categories),
-          selected='Quality Starts',
-          multiple=FALSE
-        ),
-        plotOutput('box08.plot', height='330px')
-      )
-    )
   })
   
   team_stats.data <- reactive({
@@ -252,6 +450,14 @@ function(input, output, session) {
       figure_seasons=input$team_stats.season
     )
     df.value_box(filtered_data)
+  })
+  
+  league_stats.data <- reactive({
+    filtered_data <- df.full(
+      figure_data=league_data,
+      figure_season=input$team_stats.season
+    )
+    df.value_box_league(filtered_data)
   })
 
   # head_to_head -----------------------------------------------------
