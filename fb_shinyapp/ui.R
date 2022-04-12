@@ -16,6 +16,8 @@ source('global.R')
 # SHINY UI ---------------------------------------------------------------
 shinyUI(fluidPage(
   
+  useShinyjs(),
+  
   # load custom stylesheet
   includeCSS("static/css/style.css"),
   dashboardPage(
@@ -93,10 +95,13 @@ shinyUI(fluidPage(
           div(
             id='team_stats_year',
             column(
-              width=6,
+              width=4,
               tags$h3(
                 'Stats by Team by Year',
                 style='text-align: left'
+              ),
+              tags$h5(
+                'Click to compare'
               )
             ),
             column(
@@ -169,61 +174,56 @@ shinyUI(fluidPage(
                 style = 'text-align: left;'
               )
             ),
-            column(
-              width = 3,
-              div(
-                id = "head_to_head_inputs",
-                style = "text-align: left",
-                tags$h5(
-                  "Select Team Stats by Category",
-                ),
-                selectizeInput(
-                  inputId = "head_to_head.category",
-                  label = "Select a Category",
-                  choices = c(Choose = NULL,
-                              categories$categories),
-                  multiple = FALSE,
-                  options = list(
-                    placeholder = 'Choose a category',
-                    onInitialize = I('function() { this.setValue(""); }')
+            fluidRow(
+              column(
+                width = 2,
+                div(
+                  id = "head_to_head_inputs",
+                  style = "text-align: left",
+                  tags$h5(
+                    "Select Team Stats by Category",
+                  ),
+                  selectizeInput(
+                    inputId = "head_to_head.category",
+                    label = "Select a Category",
+                    choices = c(Choose = NULL,
+                                categories$categories),
+                    multiple = FALSE,
+                    options = list(
+                      placeholder = 'Choose a category',
+                      onInitialize = I('function() { this.setValue(""); }')
+                    )
+                  ),
+                  selectizeInput(
+                    inputId = "head_to_head.team_name",
+                    label = "Select Team Name(s)",
+                    choices = c("All",
+                                sort(unique(league_data$team_name))),
+                    selected = "All",
+                    multiple = TRUE,
+                  ),
+                  sliderInput(
+                    inputId = "head_to_head.seasons",
+                    label = "Select season(s)",
+                    min = min(league_data$season),
+                    max = max(league_data$season),
+                    value = c(2014, 2021),
+                    step = 1,
+                    sep = ""
+                  ),
+                  radioGroupButtons(
+                    inputId = "head_to_head.plot_type",
+                    label = "Choose a plot type:",
+                    choices = c('Density', 'Scatter', 'StripPlot')
+                    # selected = 'Density'
                   )
-                ),
-                selectizeInput(
-                  inputId = "head_to_head.team_name",
-                  label = "Select Team Name(s)",
-                  choices = c("All",
-                              sort(unique(league_data$team_name))),
-                  selected = "All",
-                  multiple = TRUE,
-                ),
-                sliderInput(
-                  inputId = "head_to_head.seasons",
-                  label = "Select season(s)",
-                  min = min(league_data$season),
-                  max = max(league_data$season),
-                  value = c(2014, 2021),
-                  step = 1,
-                  sep = ""
+                  # TODO: Text here with stats? OR in box09?
                 )
-                # TODO: Text here with stats? OR in box09?
-              )
-            ),
-            column(
-              width = 9,
-              div(
-                width = 6,
-                style = "position: relative;",
-                radioGroupButtons(
-                  inputId = "head_to_head.plot_type",
-                  label = "Choose a plot type:",
-                  choices = c('Density', 'Scatter', 'StripPlot')
-                  # selected = 'Density'
-                ),
-                box(
-                  id = "head_to_head_box",
-                  width = 12,
-                  uiOutput("head_to_head.fig")
-                )
+              ),
+              box(
+                id = "head_to_head_box",
+                width = 9,
+                uiOutput("head_to_head.fig")
               )
             )
           )
