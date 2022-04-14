@@ -39,7 +39,7 @@ function(input, output, session) {
       highlighted_team=input$team_stats.team
     )
   })
-  
+
   onclick('r_box', showModal(modalDialog(
     title='Yearly category values',
     plotOutput('r_box.plot'),
@@ -49,8 +49,13 @@ function(input, output, session) {
   
   output$r_box <- renderValueBox({
     box_category <- 'b_R'
+    team_rank = rank <- df.get_rank(df = league_stats.data(),
+                        teamname = input$team_stats.team,
+                        selected_category = box_category
+    )
     vbox_helper(category=box_category,
-                data=team_stats.data())
+                data=team_stats.data(),
+                rank=team_rank)
   })
   
   ####
@@ -72,8 +77,13 @@ function(input, output, session) {
   
   output$hr_box <- renderValueBox({
     box_category <- 'b_HR'
+    team_rank = rank <- df.get_rank(df = league_stats.data(),
+                                    teamname = input$team_stats.team,
+                                    selected_category = box_category
+    )
     vbox_helper(category=box_category,
-                data=team_stats.data())
+                data=team_stats.data(),
+                rank=team_rank)
   })
   
   ####
@@ -95,8 +105,13 @@ function(input, output, session) {
   
   output$rbi_box <- renderValueBox({
     box_category <- 'b_RBI'
+    team_rank = rank <- df.get_rank(df = league_stats.data(),
+                                    teamname = input$team_stats.team,
+                                    selected_category = box_category
+    )
     vbox_helper(category=box_category,
-                data=team_stats.data())
+                data=team_stats.data(),
+                rank=team_rank)
   })
   
   ####
@@ -119,8 +134,13 @@ function(input, output, session) {
   
   output$bbb_box <- renderValueBox({
     box_category <- 'b_BB'
+    team_rank = rank <- df.get_rank(df = league_stats.data(),
+                                    teamname = input$team_stats.team,
+                                    selected_category = box_category
+    )
     vbox_helper(category=box_category,
-                data=team_stats.data())
+                data=team_stats.data(),
+                rank=team_rank)
   })
   
   ####
@@ -142,8 +162,13 @@ function(input, output, session) {
 
   output$kb_box <- renderValueBox({
     box_category <- 'b_K'
+    team_rank = rank <- df.get_rank(df = league_stats.data(),
+                                    teamname = input$team_stats.team,
+                                    selected_category = box_category
+    )
     vbox_helper(category=box_category,
-                data=team_stats.data())
+                data=team_stats.data(),
+                rank=team_rank)
   })
   
   ####
@@ -165,8 +190,13 @@ function(input, output, session) {
   
   output$avg_box <- renderValueBox({
     box_category <- 'b_AVGr'
+    team_rank = rank <- df.get_rank(df = league_stats.data(),
+                                    teamname = input$team_stats.team,
+                                    selected_category = box_category
+    )
     vbox_helper(category=box_category,
-                data=team_stats.data())
+                data=team_stats.data(),
+                rank=team_rank)
   })
   
   ####
@@ -188,8 +218,13 @@ function(input, output, session) {
   
   output$obp_box <- renderValueBox({
     box_category <- 'b_OBPr'
+    team_rank = rank <- df.get_rank(df = league_stats.data(),
+                                    teamname = input$team_stats.team,
+                                    selected_category = box_category
+    )
     vbox_helper(category=box_category,
-                data=team_stats.data())
+                data=team_stats.data(),
+                rank=team_rank)
   })
   
   ####
@@ -211,8 +246,13 @@ function(input, output, session) {
   
   output$slg_box <- renderValueBox({
     box_category <- 'b_SLGr'
+    team_rank = rank <- df.get_rank(df = league_stats.data(),
+                                    teamname = input$team_stats.team,
+                                    selected_category = box_category
+    )
     vbox_helper(category=box_category,
-                data=team_stats.data())
+                data=team_stats.data(),
+                rank=team_rank)
   })
   
   ####
@@ -234,8 +274,13 @@ function(input, output, session) {
   
   output$nsb_box <- renderValueBox({
     box_category <- 'b_NSB'
+    team_rank = rank <- df.get_rank(df = league_stats.data(),
+                                    teamname = input$team_stats.team,
+                                    selected_category = box_category
+    )
     vbox_helper(category=box_category,
-                data=team_stats.data())
+                data=team_stats.data(),
+                rank=team_rank)
   })
   
   ####
@@ -257,8 +302,13 @@ function(input, output, session) {
   
   output$ip_box <- renderValueBox({
     box_category <- 'p_IP'
+    team_rank = rank <- df.get_rank(df = league_stats.data(),
+                                    teamname = input$team_stats.team,
+                                    selected_category = box_category
+    )
     vbox_helper(category=box_category,
-                data=team_stats.data())
+                data=team_stats.data(),
+                rank=team_rank)
   })
   
   ####
@@ -280,8 +330,13 @@ function(input, output, session) {
   
   output$w_box <- renderValueBox({
     box_category <- 'p_W'
+    team_rank = rank <- df.get_rank(df = league_stats.data(),
+                                    teamname = input$team_stats.team,
+                                    selected_category = box_category
+    )
     vbox_helper(category=box_category,
-                data=team_stats.data())
+                data=team_stats.data(),
+                rank=team_rank)
   })
   
   ####
@@ -303,8 +358,13 @@ function(input, output, session) {
   
   output$l_box <- renderValueBox({
     box_category <- 'p_L'
+    team_rank = rank <- df.get_rank(df = league_stats.data(),
+                                    teamname = input$team_stats.team,
+                                    selected_category = box_category
+    )
     vbox_helper(category=box_category,
-                data=team_stats.data())
+                data=team_stats.data(),
+                rank=team_rank)
   })
   
   ####
@@ -326,8 +386,13 @@ function(input, output, session) {
   
   output$bbp_box <- renderValueBox({
     box_category <- 'p_BB'
+    team_rank = rank <- df.get_rank(df = league_stats.data(),
+                                    teamname = input$team_stats.team,
+                                    selected_category = box_category
+    )
     vbox_helper(category=box_category,
-                data=team_stats.data())
+                data=team_stats.data(),
+                rank=team_rank)
   })
   
   ####
@@ -349,8 +414,13 @@ function(input, output, session) {
   
   output$kp_box <- renderValueBox({
     box_category <- 'p_K'
+    team_rank = rank <- df.get_rank(df = league_stats.data(),
+                                    teamname = input$team_stats.team,
+                                    selected_category = box_category
+    )
     vbox_helper(category=box_category,
-                data=team_stats.data())
+                data=team_stats.data(),
+                rank=team_rank)
   })
   
   ####
@@ -372,8 +442,13 @@ function(input, output, session) {
   
   output$era_box <- renderValueBox({
     box_category <- 'p_ERAr'
+    team_rank = rank <- df.get_rank(df = league_stats.data(),
+                                    teamname = input$team_stats.team,
+                                    selected_category = box_category
+    )
     vbox_helper(category=box_category,
-                data=team_stats.data())
+                data=team_stats.data(),
+                rank=team_rank)
   })
   
   ####
@@ -395,8 +470,13 @@ function(input, output, session) {
   
   output$whip_box <- renderValueBox({
     box_category <- 'p_WHIPr'
+    team_rank = rank <- df.get_rank(df = league_stats.data(),
+                                    teamname = input$team_stats.team,
+                                    selected_category = box_category
+    )
     vbox_helper(category=box_category,
-                data=team_stats.data())
+                data=team_stats.data(),
+                rank=team_rank)
   })
   
   ####
@@ -418,8 +498,13 @@ function(input, output, session) {
   
   output$qs_box <- renderValueBox({
     box_category <- 'p_QS'
+    team_rank = rank <- df.get_rank(df = league_stats.data(),
+                                    teamname = input$team_stats.team,
+                                    selected_category = box_category
+    )
     vbox_helper(category=box_category,
-                data=team_stats.data())
+                data=team_stats.data(),
+                rank=team_rank)
   })
   
   output$nsvh_box.plot <- renderPlot({
@@ -439,8 +524,13 @@ function(input, output, session) {
   
   output$nsvh_box <- renderValueBox({
     box_category <- 'p_NSVH'
+    team_rank = rank <- df.get_rank(df = league_stats.data(),
+                                    teamname = input$team_stats.team,
+                                    selected_category = box_category
+    )
     vbox_helper(category=box_category,
-                data=team_stats.data())
+                data=team_stats.data(),
+                rank=team_rank)
   })
   
   team_stats.data <- reactive({
@@ -449,7 +539,7 @@ function(input, output, session) {
       figure_team_name=input$team_stats.team,
       figure_seasons=input$team_stats.season
     )
-    df.value_box(filtered_data)
+    df.valueBox(filtered_data, team_box=TRUE)
   })
   
   league_stats.data <- reactive({
@@ -457,7 +547,7 @@ function(input, output, session) {
       figure_data=league_data,
       figure_season=input$team_stats.season
     )
-    df.value_box_league(filtered_data)
+    df.valueBox(filtered_data)
   })
 
   # head_to_head -----------------------------------------------------
