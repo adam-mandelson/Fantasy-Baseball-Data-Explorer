@@ -114,7 +114,7 @@ shinyUI(fluidPage(
                 inputId='team_stats.team',
                 label=NULL,
                 choices=c(sort(teams$team_name)),
-                selected='Bellhorn',
+                selected='The ProvSox',
                 multiple=FALSE,
               )
             ),
@@ -135,9 +135,6 @@ shinyUI(fluidPage(
           ),
           div(
             id='team_stats_year_data',
-            # conditionalPanel(
-              # condition='output.team_stats_category==""',
-            # fluid_design('team_stats_panel', 'box05', 'box06', 'box07', 'box08')
             renderPrint({
               output$team_stats_season_marker
             }),
@@ -151,15 +148,6 @@ shinyUI(fluidPage(
                                 'qs_box', 'nsvh_box')
             )
           ),
-            # TODO: ONE CHART ON CLICK
-            # conditionalPanel(
-            #   condition='output.team_stats_category!=""',
-            #   box(
-            #     id='team_stats_year_fig',
-            #     width=12,
-            #     uiOutput('team_stats_year.fig')
-            #   )
-            # )
         ),
                   
         # HEAD-TO-HEAD PAGE ---------------------------------------------------------------        
@@ -215,7 +203,6 @@ shinyUI(fluidPage(
                     inputId = "head_to_head.plot_type",
                     label = "Choose a plot type:",
                     choices = c('Density', 'Scatter', 'StripPlot')
-                    # selected = 'Density'
                   )
                   # TODO: Text here with stats? OR in box09?
                 )
