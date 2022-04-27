@@ -4,6 +4,7 @@
 .ipynb_checkpoints
 *.ipynb
 .conda_env
+*.ipynb
 *.txt
 *.code-workspace
 
