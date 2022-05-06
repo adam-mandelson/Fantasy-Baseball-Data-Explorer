@@ -35,7 +35,7 @@
 ## About The Project
 
 A simple app to look at fantasy baseball data, with an aim to develop some predictive tools going forward.
-Available at [https://amandelson.shinyapps.io/fb_shinyapp/](https://amandelson.shinyapps.io/fb_shinyapp/).
+Available at <a href="https://amandelson.shinyapps.io/fb_shinyapp/" target="_blank">https://amandelson.shinyapps.io/fb_shinyapp/</a>.
 Several offline reports are available in the Offline Data tab, with the intention that these will become dynamic reports.
 
 <p align="right">(<a href="#top">back to top</a>)</p>

@@ -3,3 +3,4 @@ pandas
 requests_oauthlib
 psycopg2-binary
 pycodestyle
+xmltodict
