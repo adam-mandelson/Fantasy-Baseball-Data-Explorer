@@ -17,7 +17,7 @@ import psycopg2
 from config import config, psycopg2_exception
 
 
-def connect(data) -> None:
+def connect(data=None) -> None:
     conn = None
     try:
         params = config()
