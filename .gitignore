@@ -1,5 +1,8 @@
 # Personal
+.conda_env
 .env
+.ipynb_checkpoints
+*.ipynb
 *.txt
 *.code-workspace
 
