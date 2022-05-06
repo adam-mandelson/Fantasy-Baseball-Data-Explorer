@@ -44,7 +44,7 @@ fig.density <- function(df) {
     #          label = paste0("Median for won_week: ", cdat$value.median[1]),
     #          hjust = 1, vjust=0.5, size=4, fontface="italic")
     annotate("text", x = max(x_y$x), y = y_q[5],
-             label = paste0("Mean for won_week: ", cdat$value.mean[1]),
+             label = paste0("Mean for won_week: ", cdat$value.mean[2]),
              hjust = 1, vjust=0.5, size=4, fontface="italic")
   return(fig_density)
 }
