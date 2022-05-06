@@ -128,7 +128,7 @@ shinyUI(fluidPage(
                 inputId='team_stats.season',
                 label=NULL,
                 choices=c(unique(league_data$season)),
-                selected=2021,
+                selected=2022,
                 multiple=FALSE
               )
             )
@@ -195,7 +195,7 @@ shinyUI(fluidPage(
                     label = "Select season(s)",
                     min = min(league_data$season),
                     max = max(league_data$season),
-                    value = c(2014, 2021),
+                    value = c(2014, 2022),
                     step = 1,
                     sep = ""
                   ),
