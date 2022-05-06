@@ -11,6 +11,7 @@ This is a helpful app for figuring out what to query:
 
 from io import StringIO
 
+import pandas as pd
 import psycopg2
 
 from config import config, psycopg2_exception
@@ -30,6 +31,13 @@ def connect(data) -> None:
         with conn:
             print('PostgreSQL database:')
             cur.execute('SELECT version()')
+
+        if data is None:
+            with conn:
+                sql = 'SELECT * FROM yearly_stats'
+                df = pd.read_sql_query(sql, conn)
+                conn.close()
+                return df
 
         with conn:
             buffer = StringIO()
