@@ -1,20 +1,14 @@
-#!/usr/bin/env python3
 
-# TODO: Update
-'''
-Calls yahoo_client.py to access yahoo fantasy sports api and get league data.
-More info on the yahoo fantasy sports api is available at
-    https://developer.yahoo.com/fantasysports/guide/.
-This is a helpful app for figuring out what to query:
-    https://yahoo-fantasy-node-docs.vercel.app/.
-'''
 
 from io import StringIO
 
 import pandas as pd
 import psycopg2
 
-from config import config, psycopg2_exception
+try:
+    from config import config, psycopg2_exception
+except ImportError:
+    from league_explorer.config import config, psycopg2_exception
 
 
 def connect(data=None) -> None:
@@ -34,23 +28,44 @@ def connect(data=None) -> None:
 
         if data is None:
             with conn:
-                sql = 'SELECT * FROM yearly_stats'
+                sql = 'SELECT * FROM yearly_stats;'
                 df = pd.read_sql_query(sql, conn)
-                conn.close()
+                # conn.close()
                 return df
 
-        with conn:
-            buffer = StringIO()
-            data.to_csv(buffer, header=False, index=True)
-            buffer.seek(0)
-            try:
-                cur.copy_from(buffer, 'yearly_stats', sep=",")
-                cur.execute('SELECT COUNT(*) FROM yearly_stats')
-                rows = cur.fetchone()
-                print("Data inserted into yearly_stats successfully")
-                print(f"Inserted {rows} rows")
-            except (Exception, psycopg2.DatabaseError) as err:
-                psycopg2_exception(err)
+        else:
+            with conn:
+                buffer = StringIO()
+                data.to_csv(buffer, header=False, index=True)
+                buffer.seek(0)
+                if data.columns[0] == 'season':
+                    try:
+                        cur.copy_from(buffer, 'yearly_stats', sep=",")
+                        cur.execute('SELECT COUNT(*) FROM yearly_stats')
+                        rows = cur.fetchone()
+                        print("Data inserted into yearly_stats successfully")
+                        print(f"Inserted {rows} rows")
+                    except (Exception, psycopg2.DatabaseError) as err:
+                        psycopg2_exception(err)
+                elif data.columns[0] == 'team_id':
+                    try:
+                        cur.execute('drop table if exists team_standings')
+                        sql = '''CREATE TABLE team_standings(
+                            idx int,
+                            team_id int,
+                            name varchar(50),
+                            rank int,
+                            wins int,
+                            losses int,
+                            ties int);'''
+                        cur.execute(sql)
+                        cur.copy_from(buffer, 'team_standings', sep=",")
+                        cur.execute('SELECT COUNT(*) FROM team_standings')
+                        rows = cur.fetchone()
+                        print("Data inserted into team_standings successfully")
+                        print(f"Inserted {rows} rows")
+                    except (Exception, psycopg2.DatabaseError) as err:
+                        psycopg2_exception(err)
 
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
