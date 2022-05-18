@@ -4,7 +4,6 @@ Creates an object and a session to access data.
 
 import json
 from pathlib import Path
-# from requests import Response, Session
 from requests_oauthlib import OAuth2Session
 import xmltodict
 import pandas as pd
@@ -73,23 +72,24 @@ class LeagueQuery(object):
             self._authenticate()
         return response
 
-    def query(self, url: str, data_type):
+    def query(self, url: str, response_data_type):
         response = self.get_response(url)
-        if data_type == 'scoreboard':
+        if response_data_type in ['scoreboard', 'standings']:
             response_dict = xmltodict.parse(response.content)['fantasy_content']['league']
         response_json = json.dumps(response_dict)
         raw_response_data = {'dict': response_dict,
                              'json': response_json}
         return raw_response_data
 
-    def get_league_data(self):
-        url = "https://fantasysports.yahooapis.com/fantasy/v2/league/{sport_id}.l.{league_id}/scoreboard"
+    def get_league_data(self, league_data_type):
+        url = "https://fantasysports.yahooapis.com/fantasy/v2/league/{sport_id}.l.{league_id}/{data_type}"
         response = self.query(
             url.format(
                 sport_id=self._sport_id,
                 league_id=self._league_id,
+                data_type=league_data_type
             ),
-            data_type='scoreboard'
+            response_data_type=league_data_type
         )
         return response['dict']
 
@@ -98,7 +98,7 @@ class LeagueQuery(object):
         Gets scores for 2022 up until the current week
         '''
         yearly_stats = pd.DataFrame()
-        league_data = self.get_league_data()
+        league_data = self.get_league_data(league_data_type='scoreboard')
         current_week = int(league_data['current_week'])
 
         url = "https://fantasysports.yahooapis.com/fantasy/v2/league/{sport_id}.l.{league_id}/scoreboard;week={week}"
@@ -110,7 +110,7 @@ class LeagueQuery(object):
                         league_id=self._league_id,
                         week=week
                     ),
-                    data_type='scoreboard'
+                    response_data_type='scoreboard'
                 )
                 if response['dict']['start_week'] == '2' and week == 1:
                     print()
@@ -129,7 +129,7 @@ class LeagueQuery(object):
                     league_id=self._league_id,
                     week=selected_week
                 ),
-                data_type='scoreboard'
+                response_data_type='scoreboard'
             )
             weekly_stats = response['dict']['scoreboard']['matchups']['matchup']
             weekly_stats = self._data_obj.get_stats(
@@ -139,3 +139,15 @@ class LeagueQuery(object):
             yearly_stats = pd.concat([yearly_stats, weekly_stats])
 
         return yearly_stats
+
+    def get_standings(self, season=None, selected_week=None):
+        '''
+        Gets standings for 2022 up until the current week
+        '''
+        df_standings = pd.DataFrame()
+        league_data = self.get_league_data(
+            league_data_type='standings')['standings']['teams']['team']
+        for team in league_data:
+            team_stats = self._data_obj.get_standings(data_dict=team)
+            df_standings = pd.concat([df_standings, team_stats])
+        return df_standings

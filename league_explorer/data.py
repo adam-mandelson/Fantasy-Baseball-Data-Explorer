@@ -114,3 +114,14 @@ class LeagueData(object):
             matchups['won_category'] = (matchups[
                 'won_category'] * 1).astype('Int64').fillna(0)
             return matchups
+
+    def get_standings(self, data_dict: Dict):
+        team_standings = {
+            'team_id': data_dict['team_id'],
+            'name': data_dict['name'],
+            'rank': data_dict['team_standings']['rank'],
+            'wins': data_dict['team_standings']['outcome_totals']['wins'],
+            'losses': data_dict['team_standings']['outcome_totals']['losses'],
+            'ties': data_dict['team_standings']['outcome_totals']['ties']
+        }
+        return pd.DataFrame([team_standings])

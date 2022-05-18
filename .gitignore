@@ -3,8 +3,11 @@
 .env
 .ipynb_checkpoints
 *.ipynb
+.conda_env
+*.ipynb
 *.txt
 *.code-workspace
+*.pkl
 
 # Python files
 __pycache__

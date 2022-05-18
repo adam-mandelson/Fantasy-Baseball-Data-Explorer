@@ -54,6 +54,17 @@ shinyUI(fluidPage(
           )
         ),
         menuItem(
+          text = "Analysis",
+          tabName = "analytics",
+          icon=icon('laptop-code'),
+          
+          menuItem(
+            text='Exploratory Team Data Analysis',
+            tabName='analytics_team',
+            icon=icon('chart-bar')
+          )
+        ),
+        menuItem(
           text='Offline Data Exploration',
           tabName='data_reports',
           icon=icon('python'),
